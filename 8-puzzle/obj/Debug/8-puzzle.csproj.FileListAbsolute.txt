@@ -1,0 +1,17 @@
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\MainWindow.g.cs
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\App.g.cs
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle_MarkupCompile.cache
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle_MarkupCompile.lref
+C:\Users\angel\Documents\8-puzzle\8-puzzle\bin\Debug\8-puzzle.exe.config
+C:\Users\angel\Documents\8-puzzle\8-puzzle\bin\Debug\8-puzzle.exe
+C:\Users\angel\Documents\8-puzzle\8-puzzle\bin\Debug\8-puzzle.pdb
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\MainWindow.baml
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle.g.resources
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\_8_puzzle.Properties.Resources.resources
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle.csproj.GenerateResource.cache
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle.csproj.CoreCompileInputs.cache
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle.exe
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle.pdb
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\About.g.cs
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\About.baml
+C:\Users\angel\Documents\8-puzzle\8-puzzle\obj\Debug\8-puzzle.csprojAssemblyReference.cache
