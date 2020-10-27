@@ -20,15 +20,17 @@ namespace _8_puzzle
     /// </summary>
     public partial class MainWindow : Window
     {
-        int[,] arrPuzzle = new int[3,3];
         //Coordenates to analize how the empty space moves
         int xEmpty;
         int yEmpty;
 
         public MainWindow()
         {
+            this.DataContext = this;
             InitializeComponent();
         }
+
+        public string BoxA { get; set; }
 
         private void btn_Close_Click(object sender, RoutedEventArgs e)
         {
@@ -43,8 +45,8 @@ namespace _8_puzzle
 
         private void btn_Run_Click(object sender, RoutedEventArgs e)
         {
-            //This will be used to manage the different kind of algorithms it can be selected by the user
-            int nAlgorithmType = 1;
+            int[] puzzle = new int[9];
+
             //Fills the array and x,y for the empty space
             if (txt_1.Text == "")
             {
@@ -53,7 +55,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[0, 0] = Convert.ToInt32(txt_1.Text);
+                puzzle[0] = Convert.ToInt32(txt_1.Text);
             }
             if (txt_2.Text == "")
             {
@@ -62,7 +64,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[0, 1] = Convert.ToInt32(txt_2.Text);
+                puzzle[1] = Convert.ToInt32(txt_2.Text);
             }
             if (txt_3.Text == "")
             {
@@ -71,7 +73,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[0, 2] = Convert.ToInt32(txt_3.Text);
+                puzzle[2] = Convert.ToInt32(txt_3.Text);
             }
             if (txt_4.Text == "")
             {
@@ -80,7 +82,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[1, 0] = Convert.ToInt32(txt_4.Text);
+                puzzle[3] = Convert.ToInt32(txt_4.Text);
             }
             if (txt_5.Text == "")
             {
@@ -89,7 +91,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[1, 1] = Convert.ToInt32(txt_5.Text);
+                puzzle[4] = Convert.ToInt32(txt_5.Text);
             }
             if (txt_6.Text == "")
             {
@@ -98,7 +100,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[1, 2] = Convert.ToInt32(txt_6.Text);
+                puzzle[5] = Convert.ToInt32(txt_6.Text);
             }
             if (txt_7.Text == "")
             {
@@ -107,7 +109,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[2, 0] = Convert.ToInt32(txt_7.Text);
+                puzzle[6] = Convert.ToInt32(txt_7.Text);
             }
             if (txt_8.Text == "")
             {
@@ -116,7 +118,7 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[2, 1] = Convert.ToInt32(txt_8.Text);
+                puzzle[7] = Convert.ToInt32(txt_8.Text);
             }
             if (txt_9.Text == "")
             {
@@ -125,63 +127,35 @@ namespace _8_puzzle
             }
             else
             {
-                arrPuzzle[2, 2] = Convert.ToInt32(txt_9.Text);
+                puzzle[8] = Convert.ToInt32(txt_9.Text);
             }
 
-            switch (nAlgorithmType)
+            //Test puzzle
+            //int[] puzzle =
+            //{
+            //    1, 2, 4,
+            //    3, 0, 5,
+            //    7, 6, 8
+            //};
+
+            Node root = new Node(puzzle);
+            UniformedSearch ui = new UniformedSearch();
+
+            List<Node> solution = ui.BreadFirstSearch(root);
+            txt_puzzle.Text = "";
+
+            if (solution.Count > 0)
             {
-                case 1://Width-first
-                    solveBreadthFirst();
-                    break;
-                case 2://Width-first
-                    solveDepthFirst();
-                    break;
-                default:
-                    MessageBox.Show("Please select a valid option as algorithm", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    break;
+                for (int i = 0; i < solution.Count; i++)
+                {
+                    BoxA = solution[i].PrintPuzzle();
+                    txt_puzzle.Text += BoxA;
+                }
             }
-            
-            //Shows the finished puzzle
-            txt_1.Text = "1";
-            txt_2.Text = "2";
-            txt_3.Text = "3";
-            txt_4.Text = "4";
-            txt_5.Text = "5";
-            txt_6.Text = "6";
-            txt_7.Text = "7";
-            txt_8.Text = "8";
-            txt_9.Text = "";
-        }
-
-        bool isCompleted()
-        {
-            bool bResult = true;
-            bResult = bResult && arrPuzzle[0, 0] == 1;
-            bResult = bResult && arrPuzzle[0, 1] == 2;
-            bResult = bResult && arrPuzzle[0, 2] == 3;
-            bResult = bResult && arrPuzzle[1, 0] == 4;
-            bResult = bResult && arrPuzzle[1, 1] == 5;
-            bResult = bResult && arrPuzzle[1, 2] == 6;
-            bResult = bResult && arrPuzzle[2, 0] == 7;
-            bResult = bResult && arrPuzzle[2, 1] == 8;
-            //Nine is empty
-            bResult = bResult && xEmpty == 2 && yEmpty == 2;
-            return bResult;
-        }
-
-        void solveBreadthFirst()
-        {
-            while (!isCompleted())
+            else
             {
-
-            }
-        }
-
-        void solveDepthFirst()
-        {
-            while (!isCompleted())
-            {
-
+                Console.WriteLine("El camino a la solución no fue encontrado.");
+                txt_puzzle.Text = "El camino a la solución no fue encontrado.";
             }
         }
     }
