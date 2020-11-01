@@ -36,8 +36,8 @@ namespace _8_puzzle
             }
             MoveToRight(puzzle, x);
             MoveToLeft(puzzle, x);
-            MoveToUp(puzzle, x);
             MoveToDown(puzzle, x);
+            MoveToUp(puzzle, x);
         }
 
         public void MoveToRight(int[] p, int i)

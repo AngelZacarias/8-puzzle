@@ -141,21 +141,69 @@ namespace _8_puzzle
             Node root = new Node(puzzle);
             UniformedSearch ui = new UniformedSearch();
 
-            List<Node> solution = ui.BreadFirstSearch(root);
-            txt_puzzle.Text = "";
+            //Selects the algorithm to solve it
+            switch (CBOX_Type.SelectedValue.ToString())
+            {
+                case "Breadth First Search":
+                    List<Node> BFSsolution = ui.BreadFirstSearch(root);
+                    txt_puzzle.Text = "";
 
-            if (solution.Count > 0)
-            {
-                for (int i = 0; i < solution.Count; i++)
-                {
-                    BoxA = solution[i].PrintPuzzle();
-                    txt_puzzle.Text += BoxA;
-                }
+                    if (BFSsolution.Count > 0)
+                    {
+                        foreach (Node movement in BFSsolution)
+                        {
+                            BoxA = movement.PrintPuzzle();
+                            txt_puzzle.Text += BoxA;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("El camino a la solución no fue encontrado.");
+                        txt_puzzle.Text = "El camino a la solución no fue encontrado.";
+                    }
+                    break;
+                case "Depth First Search":
+                    Stack<Node> DFSsolution = ui.DeepthFirstSearch(root);
+                    txt_puzzle.Text = "";
+
+                    if (DFSsolution.Count > 0)
+                    {
+                        foreach (Node movement in DFSsolution)
+                        {
+                            BoxA = movement.PrintPuzzle();
+                            txt_puzzle.Text += BoxA;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("El camino a la solución no fue encontrado.");
+                        txt_puzzle.Text = "El camino a la solución no fue encontrado.";
+                    }
+                    break;
+                case "Iterative Depth First Search":
+                    break;
+                default:
+                    MessageBox.Show("Not Supported Algorithm");
+                    break;
             }
-            else
+        }
+
+        private void CBOX_Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (CBOX_Type.SelectedValue)
             {
-                Console.WriteLine("El camino a la solución no fue encontrado.");
-                txt_puzzle.Text = "El camino a la solución no fue encontrado.";
+                case "Breadth First Search":
+                    Lbl_SolutionOrder.Content = "Sorted From Solution to Problem";
+                    break;
+                case "Depth First Search":
+                    Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
+                    break;
+                case "Iterative Depth First Search":
+                    Lbl_SolutionOrder.Content = "IN DEVELOPMENT!!!";
+                    break;
+                default:
+                    MessageBox.Show("Not Supported Algorithm");
+                    break;
             }
         }
     }
