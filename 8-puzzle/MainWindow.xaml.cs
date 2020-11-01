@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace _8_puzzle
 {
@@ -140,12 +141,16 @@ namespace _8_puzzle
 
             Node root = new Node(puzzle);
             UniformedSearch ui = new UniformedSearch();
-
+            DateTime startedTime;
+            DateTime finalizedTime;
             //Selects the algorithm to solve it
             switch (CBOX_Type.SelectedValue.ToString())
             {
                 case "Breadth First Search":
+                    startedTime = DateTime.Now;
                     List<Node> BFSsolution = ui.BreadFirstSearch(root);
+                    finalizedTime = DateTime.Now;
+                    Lbl_SolutionResults.Content = "Elapsed Time:" + finalizedTime.Subtract(startedTime).TotalSeconds.ToString()+" seconds."+ Environment.NewLine + "Total Movements: "+ BFSsolution.Count.ToString();
                     txt_puzzle.Text = "";
 
                     if (BFSsolution.Count > 0)
@@ -163,7 +168,10 @@ namespace _8_puzzle
                     }
                     break;
                 case "Depth First Search":
+                    startedTime = DateTime.Now;
                     Stack<Node> DFSsolution = ui.DeepthFirstSearch(root);
+                    finalizedTime = DateTime.Now;
+                    Lbl_SolutionResults.Content = "Elapsed Time:" + finalizedTime.Subtract(startedTime).TotalSeconds.ToString() +" seconds." + Environment.NewLine + "Total Movements: " + DFSsolution.Count.ToString();
                     txt_puzzle.Text = "";
 
                     if (DFSsolution.Count > 0)
