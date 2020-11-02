@@ -140,6 +140,9 @@ namespace _8_puzzle
             //};
 
             Node root = new Node(puzzle);
+            root.costg = 0; // start cost
+            root.Heurs(); // calculating the heuristic cost.
+            root.costt = root.costg + root.costh; //total cost.
             UniformedSearch ui = new UniformedSearch();
             DateTime startedTime;
             DateTime finalizedTime;
@@ -189,6 +192,25 @@ namespace _8_puzzle
                     }
                     break;
                 case "Iterative Depth First Search":
+                    startedTime = DateTime.Now;
+                    Stack<Node> IDFSsolution = ui.IterativeDeepthFirstSearch(root);
+                    finalizedTime = DateTime.Now;
+                    Lbl_SolutionResults.Content = "Elapsed Time:" + finalizedTime.Subtract(startedTime).TotalSeconds.ToString() + " seconds." + Environment.NewLine + "Total Movements: " + IDFSsolution.Count.ToString();
+                    txt_puzzle.Text = "";
+
+                    if (IDFSsolution.Count > 0)
+                    {
+                        foreach (Node movement in IDFSsolution)
+                        {
+                            BoxA = movement.PrintPuzzle();
+                            txt_puzzle.Text += BoxA;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("El camino a la solución no fue encontrado.");
+                        txt_puzzle.Text = "El camino a la solución no fue encontrado.";
+                    }
                     break;
                 default:
                     MessageBox.Show("Not Supported Algorithm");

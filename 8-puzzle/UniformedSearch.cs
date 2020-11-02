@@ -88,6 +88,44 @@ namespace _8_puzzle
             return PathToSolution;
         }
 
+        public Stack<Node> IterativeDeepthFirstSearch(Node root)
+        {
+            Stack<Node> PathToSolution = new Stack<Node>();
+            Stack<Node> OpenList = new Stack<Node>();
+            Stack<Node> ClosedList = new Stack<Node>();
+
+            nivelActual = 0;
+
+            OpenList.Push(root);
+            bool goalFound = false;
+            
+            while (true)
+            {
+                while (OpenList.Count > 0 || !goalFound)
+                {
+                    Node currentNode = OpenList.Pop();
+                    ClosedList.Push(currentNode);
+                    currentNode.ExpandNode();
+
+                    for (int i = 0; i < currentNode.children.Count; i++)
+                    {
+                        Node currentChild = currentNode.children[i];
+                        if (currentChild.GoalTest())
+                        {
+                            Console.WriteLine("Meta encontrada.");
+                            goalFound = true;
+
+                            PathTrace(PathToSolution, currentChild);
+                            return PathToSolution;
+                        }
+
+                        if (!Contains(OpenList, currentChild) && !Contains(ClosedList, currentChild))
+                            OpenList.Push(currentChild);
+                    }
+
+                }
+            }
+        }
 
         public void PathTrace(List<Node> path, Node n)
         {
@@ -166,6 +204,6 @@ namespace _8_puzzle
             }
             return contains;
         }
-        
+
     }
 }
