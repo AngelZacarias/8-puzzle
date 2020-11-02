@@ -9,7 +9,7 @@ namespace _8_puzzle
     class UniformedSearch
     {
         //Matybe we could use these variables for Iterative Depth Search
-        int nLimite = 5;
+        int nLimite = 0;
         int nivelActual = 0;
         public UniformedSearch()
         {
@@ -93,20 +93,21 @@ namespace _8_puzzle
             Stack<Node> PathToSolution = new Stack<Node>();
             Stack<Node> OpenList = new Stack<Node>();
             Stack<Node> ClosedList = new Stack<Node>();
-
-            nivelActual = 0;
-
-            OpenList.Push(root);
-            bool goalFound = false;
-            
+            bool goalFound;
             while (true)
             {
-                while (OpenList.Count > 0 || !goalFound)
+                OpenList.Clear();
+                ClosedList.Clear();
+                nivelActual = 0;
+                OpenList.Push(root);
+                goalFound = false;
+                nLimite += 1;
+                
+                while (OpenList.Count > 0 && !goalFound)
                 {
                     Node currentNode = OpenList.Pop();
                     ClosedList.Push(currentNode);
                     currentNode.ExpandNode();
-
                     for (int i = 0; i < currentNode.children.Count; i++)
                     {
                         Node currentChild = currentNode.children[i];
@@ -118,15 +119,32 @@ namespace _8_puzzle
                             PathTrace(PathToSolution, currentChild);
                             return PathToSolution;
                         }
-
-                        if (!Contains(OpenList, currentChild) && !Contains(ClosedList, currentChild))
-                            OpenList.Push(currentChild);
-                    }
-
+                        
+                        nivelActual = getCurrentLevel(currentChild);
+                        if (nivelActual<=nLimite)
+                        {
+                            if (!Contains(OpenList, currentChild) && !Contains(ClosedList, currentChild))
+                            {
+                                OpenList.Push(currentChild);
+                            }
+                        }
+                    }                  
                 }
             }
         }
 
+        public int getCurrentLevel(Node n)
+        {
+            int level = 0;
+            Node current = n;
+            while (current.parent != null)
+            {
+                current = current.parent;
+                level++;
+            }
+            return level;
+
+        }
         public void PathTrace(List<Node> path, Node n)
         {
             Console.WriteLine("Trazando ruta...");

@@ -229,7 +229,7 @@ namespace _8_puzzle
                     Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
                     break;
                 case "Iterative Depth First Search":
-                    Lbl_SolutionOrder.Content = "IN DEVELOPMENT!!!";
+                    Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
                     break;
                 default:
                     MessageBox.Show("Not Supported Algorithm");
