@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
+using System.Xml.Schema;
 
 namespace _8_puzzle
 {
@@ -144,6 +145,7 @@ namespace _8_puzzle
             root.Heurs(); // calculating the heuristic cost.
             root.costt = root.costg + root.costh; //total cost.
             UniformedSearch ui = new UniformedSearch();
+            InformedSearch infS = new InformedSearch();
             DateTime startedTime;
             DateTime finalizedTime;
             //Selects the algorithm to solve it
@@ -212,6 +214,27 @@ namespace _8_puzzle
                         txt_puzzle.Text = "El camino a la solución no fue encontrado.";
                     }
                     break;
+                case "Greedy Best First Search":
+                    startedTime = DateTime.Now;
+                    Stack<Node> GBFSsolution = infS.GreedyFirstSearch(root);
+                    finalizedTime = DateTime.Now;
+                    Lbl_SolutionResults.Content = "Elapsed Time:" + finalizedTime.Subtract(startedTime).TotalSeconds.ToString() + " seconds." + Environment.NewLine + "Total Movements: " + GBFSsolution.Count.ToString();
+                    txt_puzzle.Text = "";
+                    
+                    if (GBFSsolution.Count > 0)
+                    {
+                        foreach (Node movement in GBFSsolution)
+                        {
+                            BoxA = movement.PrintPuzzle();
+                            txt_puzzle.Text += BoxA;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("El camino a la solución no fue encontrado.");
+                        txt_puzzle.Text = "El camino a la solución no fue encontrado.";
+                    }
+                    break;
                 default:
                     MessageBox.Show("Not Supported Algorithm");
                     break;
@@ -229,6 +252,9 @@ namespace _8_puzzle
                     Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
                     break;
                 case "Iterative Depth First Search":
+                    Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
+                    break;
+                case "Greedy Best First Search":
                     Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
                     break;
                 default:

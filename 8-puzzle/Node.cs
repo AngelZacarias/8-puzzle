@@ -195,6 +195,9 @@ namespace _8_puzzle
             int[,] Goal = new int[,] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } };
             int[,] A = new int[,] { { puzzle[0], puzzle[1], puzzle[2] }, { puzzle[3], puzzle[4], puzzle[5] }, { puzzle[6], puzzle[7], puzzle[8] } };
             puzzle2 = A;
+            int Heuristic = 0;
+            /*
+             ***** Weird Function, not working as good as new function below...
             int i, i2, j, j2, Heuristic = 0;
             bool found;
             for (i = 0; i < n; i++)
@@ -221,8 +224,76 @@ namespace _8_puzzle
                     }
                 }
             }
+            */
+            for (int i=0; i <= 2; i++)
+            {
+                for(int j = 0; j <= 2; j++)
+                {
+                    if(A[i, j] != 0)
+                    {
+                        if (A[i, j] != Goal[i, j])
+                        {
+                            Console.WriteLine("Calculating for: " + A[i, j].ToString());
+                            int iGoal = getRowIndexPositionOfValue(A[i, j]);
+                            int jGoal = getColumnIndexPositionOfValue(A[i, j]);
+                            Console.WriteLine(iGoal.ToString() + ", " + jGoal.ToString());
+                            Heuristic += Math.Abs(i - iGoal) + Math.Abs(j - jGoal); ;
+                        }
+                    }
+                }
+                
+            }
             // setting the state heurisitc cost.
             this.costh = Heuristic;
+        }
+        
+        private int getRowIndexPositionOfValue(int valueToFind)
+        {
+            int[,] Goal = new int[,] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } };
+            int position = 0;
+            for (int indx = 0; indx < 3; indx++)
+            {
+                for (int jndx = 0; jndx < 3; jndx++)
+                {
+                    if(valueToFind == Goal[indx, jndx])
+                    {
+                        position = indx;
+                    }
+                }
+            }
+            return position;
+        }
+
+        private int getColumnIndexPositionOfValue(int valueToFind)
+        {
+            int[,] Goal = new int[,] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } };
+            int position = 0;
+            for (int indx = 0; indx < 3; indx++)
+            {
+                for (int jndx = 0; jndx < 3; jndx++)
+                {
+                    if (valueToFind == Goal[indx, jndx])
+                    {
+                        position = jndx;
+                    }
+                }
+            }
+            return position;
+        }
+    }
+
+    class GBFSC : IComparer<Node>
+    {
+        public int Compare(Node x, Node y)
+        {
+            if (x.costh == 0 || y.costh == 0)
+            {
+                return 0;
+            }
+
+            // CompareTo() method 
+            return y.costh.CompareTo(x.costh);
+
         }
     }
 }
