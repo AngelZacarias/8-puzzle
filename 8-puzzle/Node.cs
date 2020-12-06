@@ -15,7 +15,7 @@ namespace _8_puzzle
         public int[,] puzzle2 = new int[3,3];
         public int x = 0;
         public int col = 3;
-        public int costg = 3;
+        public int costg = 0;
         public int costh = 3;
         public int costt = 3;
 
@@ -39,7 +39,8 @@ namespace _8_puzzle
                 if (puzzle[i] == 0)
                 {
                     x = i;
-                    this.costg += 1;
+                    if (this.parent != null)
+                        this.costg = parent.costg + 1;
                     this.Heurs();
                     this.costt = this.costg + this.costh;
                 }
@@ -245,6 +246,10 @@ namespace _8_puzzle
             }
             // setting the state heurisitc cost.
             this.costh = Heuristic;
+            if (this.parent != null)
+                this.costg = this.parent.costg + 1;
+            this.costt = this.costh + this.costg;
+            Console.WriteLine("H:" + this.costh.ToString() + " G:" + this.costg.ToString());
         }
         
         private int getRowIndexPositionOfValue(int valueToFind)
@@ -282,6 +287,7 @@ namespace _8_puzzle
         }
     }
 
+    //Used for Greedy Algorithm
     class GBFSC : IComparer<Node>
     {
         public int Compare(Node x, Node y)
@@ -293,6 +299,20 @@ namespace _8_puzzle
 
             // CompareTo() method 
             return y.costh.CompareTo(x.costh);
+
+        }
+    }
+
+    //Used for A* Algorithm
+    class AStarC : IComparer<Node>
+    {
+        public int Compare(Node x, Node y)
+        {
+            if (x.costt == 0 || y.costt == 0)
+            {
+                return 0;
+            }
+            return y.costt.CompareTo(x.costt);
 
         }
     }

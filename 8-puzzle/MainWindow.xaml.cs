@@ -235,6 +235,27 @@ namespace _8_puzzle
                         txt_puzzle.Text = "El camino a la solución no fue encontrado.";
                     }
                     break;
+                case "A* Search":
+                    startedTime = DateTime.Now;
+                    Stack<Node> AStarSsolution = infS.AStarSearch(root);
+                    finalizedTime = DateTime.Now;
+                    Lbl_SolutionResults.Content = "Elapsed Time:" + finalizedTime.Subtract(startedTime).TotalSeconds.ToString() + " seconds." + Environment.NewLine + "Total Movements: " + AStarSsolution.Count.ToString();
+                    txt_puzzle.Text = "";
+
+                    if (AStarSsolution.Count > 0)
+                    {
+                        foreach (Node movement in AStarSsolution)
+                        {
+                            BoxA = movement.PrintPuzzle();
+                            txt_puzzle.Text += BoxA;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("El camino a la solución no fue encontrado.");
+                        txt_puzzle.Text = "El camino a la solución no fue encontrado.";
+                    }
+                    break;
                 default:
                     MessageBox.Show("Not Supported Algorithm");
                     break;
@@ -255,6 +276,9 @@ namespace _8_puzzle
                     Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
                     break;
                 case "Greedy Best First Search":
+                    Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
+                    break;
+                case "A* Search":
                     Lbl_SolutionOrder.Content = "Sorted From Problem to Solution";
                     break;
                 default:

@@ -54,6 +54,48 @@ namespace _8_puzzle
             return PathToSolution;
         }
 
+        public Stack<Node> AStarSearch(Node root)
+        {
+            Stack<Node> PathToSolution = new Stack<Node>();
+            Stack<Node> OpenList = new Stack<Node>();
+            Stack<Node> ClosedList = new Stack<Node>();
+
+            OpenList.Push(root);
+            bool goalFound = false;
+
+            while (OpenList.Count > 0 && !goalFound)
+            {
+                Node currentNode = OpenList.Pop();
+                ClosedList.Push(currentNode);
+                currentNode.ExpandNode();
+
+                AStarC MyComparer = new AStarC();
+                foreach (Node child in currentNode.children)
+                {
+                    child.Heurs();
+                }
+                currentNode.children.Sort(MyComparer);
+
+                for (int i = 0; i < currentNode.children.Count; i++)
+                {
+                    Node currentChild = currentNode.children[i];
+                    if (currentChild.GoalTest())
+                    {
+                        Console.WriteLine("Meta encontrada.");
+                        goalFound = true;
+
+                        PathTrace(PathToSolution, currentChild);
+                    }
+
+                    if (!Contains(OpenList, currentChild) && !Contains(ClosedList, currentChild))
+                        OpenList.Push(currentChild);
+                }
+
+            }
+
+            return PathToSolution;
+        }
+
         public void PathTrace(Stack<Node> path, Node n)
         {
             Console.WriteLine("Trazando ruta...");

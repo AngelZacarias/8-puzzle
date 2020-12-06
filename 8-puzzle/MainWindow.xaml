@@ -30,6 +30,7 @@
             <ComboBoxItem>Depth First Search</ComboBoxItem>
             <ComboBoxItem>Iterative Depth First Search</ComboBoxItem>
             <ComboBoxItem>Greedy Best First Search</ComboBoxItem>
+            <ComboBoxItem>A* Search</ComboBoxItem>
         </ComboBox>
         <Label x:Name="label_Copy1" Content="Solve By Using:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top" Height="26" Width="156" Background="White" FontFamily="Open Sans" Foreground="#FF1EA486" FontWeight="Light"/>
         <Label x:Name="label_Copy2" Content="Results" HorizontalAlignment="Left" Margin="15,263,0,0" VerticalAlignment="Top" Height="26" Width="72" Background="White" FontFamily="Open Sans" Foreground="#FF1EA486" FontWeight="Light"/>
